@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسجل عام تنظيمات العمل بالسودان - نظام حوسبة الأعمال المتكامل</title>
+    <!-- Google Fonts for professional Arabic Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #1F4E79;
+            --primary-dark: #153654;
+            --primary-light: #eef4f9;
+            --secondary-color: #708090;
+            --accent-color: #e67e22;
+            --success-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --warning-color: #f1c40f;
+            --bg-body: #f4f7f9;
+            --bg-sidebar: #1a252f;
+            --text-dark: #2c3e50;
+            --text-light: #ffffff;
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-sidebar);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            right: 0;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+        }
+
+        .sidebar-brand {
+            padding: 25px 20px;
+            background-color: #111a24;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #2c3e50;
+        }
+
+        .sidebar-brand i {
+            font-size: 24px;
+            color: var(--accent-color);
+        }
+
+        .sidebar-brand h3 {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 0;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 25px;
+            color: #b8c7ce;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition);
+            border-right: 4px solid transparent;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu li.active a {
+            color: var(--text-light);
+            background-color: rgba(255,255,255,0.05);
+            border-right-color: var(--accent-color);
+        }
+
+        .sidebar-menu a i {
+            width: 20px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .menu-category {
+            padding: 10px 25px 5px;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #7f8c8d;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Main Content Wrapper */
+        .main-content {
+            margin-right: 280px;
+            width: calc(100% - 280px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        /* Top Header */
+        .top-header {
+            background-color: var(--text-light);
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title h2 {
+            font-size: 18px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .meta-date {
+            font-size: 13px;
+            color: var(--secondary-color);
+            background-color: var(--primary-light);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            border: 2px solid var(--primary-light);
+        }
+
+        .user-info h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .user-info span {
+            font-size: 11px;
+            color: var(--success-color);
+            font-weight: 600;
+            display: block;
+        }
+
+        /* Content Container */
+        .content-body {
+            padding: 30px;
+            flex-grow: 1;
+        }
+
+        /* Stats Cards Layout */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: var(--text-light);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--card-shadow);
+            border-bottom: 4px solid transparent;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card.primary { border-bottom-color: var(--primary-color); }
+        .stat-card.accent { border-bottom-color: var(--accent-color); }
+        .stat-card.success { border-bottom-color: var(--success-color); }
+        .stat-card.danger { border-bottom-color: var(--danger-color); }
+
+        .stat-details h3 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .stat-details span {
+            font-size: 13px;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .stat-card.primary .stat-icon { background-color: rgba(31,78,121,0.1); color: var(--primary-color); }
+        .stat-card.accent .stat-icon { background-color: rgba(230,126,34,0.1); color: var(--accent-color); }
+        .stat-card.success .stat-icon { background-color: rgba(46,204,113,0.1); color: var(--success-color); }
+        .stat-card.danger .stat-icon { background-color: rgba(231,76,60,0.1); color: var(--danger-color); }
+
+        /* System Alert Callout (Retirement Module Notification) */
+        .system-alert {
+            background: linear-gradient(135deg, #fff3e0, #fff);
+            border-right: 6px solid var(--accent-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--card-shadow);
+        }
+
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .alert-content i {
+            font-size: 28px;
+            color: var(--accent-color);
+        }
+
+        .alert-text h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #d35400;
+            margin-bottom: 3px;
+        }
+
+        .alert-text p {
+            font-size: 13px;
+            color: var(--text-dark);
+        }
+
+        .alert-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .alert-btn:hover {
+            background-color: #d35400;
+        }
+
+        /* App Sections (Tab content) */
+        .app-section {
+            display: none;
+        }
+
+        .app-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dashboard Content Split Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        /* Cards/Panels */
+        .panel {
+            background-color: var(--text-light);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 20px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fafbfc;
+        }
+
+        .panel-header h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-body {
+            padding: 20px;
+        }
+
+        /* Tables styling */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        .custom-table th {
+            background-color: #f8fafc;
+            color: var(--secondary-color);
+            font-weight: 700;
+            font-size: 13px;
+            padding: 14px 16px;
+            border-bottom: 2px solid #edf2f7;
+        }
+
+        .custom-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #edf2f7;
+            font-size: 13.5px;
+            color: var(--text-dark);
+        }
+
+        .custom-table tr:hover {
+            background-color: #fdfefe;
+        }
+
+        /* Status Badges */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .badge.success { background-color: #e8f8f0; color: var(--success-color); }
+        .badge.warning { background-color: #fef9e7; color: #d4ac0d; }
+        .badge.danger { background-color: #fdedec; color: var(--danger-color); }
+        .badge.primary { background-color: var(--primary-light); color: var(--primary-color); }
+
+        /* Action Buttons */
+        .btn-action {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            transition: var(--transition);
+            margin-left: 4px;
+        }
+
+        .btn-action.view { background-color: #eef4f9; color: var(--primary-color); }
+        .btn-action.edit { background-color: #fef5ec; color: var(--accent-color); }
+        .btn-action.delete { background-color: #fdedec; color: var(--danger-color); }
+
+        .btn-action:hover {
+            transform: scale(1.05);
+        }
+
+        /* Interactive Forms controls */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 13.5px;
+            background-color: #fff;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(31,78,121,0.15);
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Chat Interface Styles */
+        .chat-container {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #edf2f7;
+            border-radius: 8px;
+            background-color: #f8fafc;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-bubble {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .chat-bubble.sent {
+            background-color: var(--primary-color);
+            color: white;
+            align-self: flex-start;
+            border-top-right-radius: 2px;
+        }
+
+        .chat-bubble.received {
+            background-color: #e2e8f0;
+            color: var(--text-dark);
+            align-self: flex-end;
+            border-top-left-radius: 2px;
+        }
+
+        .chat-input-area {
+            padding: 12px;
+            background-color: white;
+            border-top: 1px solid #edf2f7;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Call System Wrapper styling */
+        .call-wrapper {
+            background-color: #111a24;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .video-box {
+            background-color: #2c3e50;
+            height: 200px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border: 2px solid #34495e;
+            overflow: hidden;
+        }
+
+        .video-box span {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0,0,0,0.6);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        .call-controls {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-call {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .btn-call.mute { background-color: #7f8c8d; }
+        .btn-call.video-toggle { background-color: #2980b9; }
+        .btn-call.hangup { background-color: var(--danger-color); }
+
+        .btn-call:hover { transform: scale(1.1); }
+
+        /* General Footer */
+        footer {
+            background-color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            color: var(--secondary-color);
+            border-top: 1px solid #edf2f7;
+            margin-top: auto;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Menu Component -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid from fa-building-shield"></i>
+            <div>
+                <h3>مسجل عام تنظيمات العمل</h3>
+                <span style="font-size: 11px; color: var(--accent-color); font-weight: 600;">جمهورية السودان</span>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="active"><a href="#" onclick="switchTab(event, 'dashboard')"><i class="fa-solid fa-chart-pie"></i>لوحة التحكم العامة</a></li>
+            
+            <div class="menu-category">التنظيمات القومية</div>
+            <li><a href="#" onclick="switchTab(event, 'unions')"><i class="fa-solid fa-users-gear"></i>النقابات القومية (15)</a></li>
+            <li><a href="#" onclick="switchTab(event, 'employers')"><i class="fa-solid fa-briefcase"></i>اتحاد أصحاب العمل</a></li>
+            <li><a href="#" onclick="switchTab(event, 'professional')"><i class="fa-solid fa-graduation-cap"></i>الاتحادات المهنية</a></li>
+            
+            <div class="menu-category">إدارة الولايات</div>
+            <li><a href="#" onclick="switchTab(event, 'states')"><i class="fa-solid fa-map-location-dot"></i>تنظيمات الولايات (18)</a></li>
+            
+            <div class="menu-category">نظام المعاشات التلقائي</div>
+            <li><a href="#" onclick="switchTab(event, 'pensions')"><i class="fa-solid fa-user-clock"></i>إدارة المعاشيين والمؤرشفين</a></li>
+            
+            <div class="menu-category">منظومة الاتصال والعمليات</div>
+            <li><a href="#" onclick="switchTab(event, 'communications')"><i class="fa-solid fa-comments"></i>التواصل الداخلي والمرئي</a></li>
+            <li><a href="#" onclick="switchTab(event, 'office')"><i class="fa-solid fa-folder-tree"></i>النظام الإداري للمكتب</a></li>
+            <li><a href="#" onclick="switchTab(event, 'tech-specs')"><i class="fa-solid fa-microchip"></i>المواصفات والحماية</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Workspace Content -->
+    <main class="main-content">
+        <!-- Top Navigation Bar Header -->
+        <header class="top-header">
+            <div class="header-title">
+                <i class="fa-solid fa-bars" style="font-size: 18px; color: var(--secondary-color); cursor: pointer; margin-left: 15px;"></i>
+                <h2 id="page-main-title">لوحة التحكم السوبر أدمن المركزية</h2>
+            </div>
+            <div class="header-meta">
+                <div class="meta-date">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span id="current-date">الجمعة، 22 مايو 2026</span>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar">ع</div>
+                    <div class="user-info">
+                        <h4>أحمد عبد العزيز</h4>
+                        <span>سوبر أدمن (اتحادي)</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Content Body Section -->
+        <div class="content-body">
+            
+            <!-- ALert/Notification for Automated Retirement System Action -->
+            <div class="system-alert" id="pension-alert">
+                <div class="alert-content">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <div class="alert-text">
+                        <h4>تحديث ذكي لنظام المعاشات التلقائي</h4>
+                        <p>تم رصد وصول عدد (4) أعضاء إلى السن القانونية للمعاش اليوم. قام النظام تلقائياً بتحويل ملفاتهم وعزلها في سجل الأرشفة الرقمية.</p>
+                    </div>
+                </div>
+                <button class="alert-btn" onclick="goToPensionsTab()">استعراض ملفات المعاشيين</button>
+            </div>
+
+            <!-- TAB 1: DASHBOARD VIEW -->
+            <section id="dashboard" class="app-section active">
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-details">
+                            <h3>18 ولاية</h3>
+                            <span>مكاتب ولائية مفعلة</span>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-earth-africa"></i></div>
+                    </div>
+                    <div class="stat-card accent">
+                        <div class="stat-details">
+                            <h3>15 نقابة</h3>
+                            <span>نقابة قومية مسجلة</span>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-people-group"></i></div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-details">
+                            <h3>12,450</h3>
+                            <span>عضوية نشطة بالتنظيمات</span>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-id-card"></i></div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-details">
+                            <h3>1,842 عازل</h3>
+                            <span>ملفات المعاشيين المؤرشفة</span>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-box-archive"></i></div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3><i class="fa-solid fa-clock-rotate-left"></i>آخر إجراءات وحركات العمليات بالنظام الموحد</h3>
+                            <span class="badge primary">تحديث لحظي</span>
+                        </div>
+                        <div class="panel-body">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>نوع الحركة / الإجراء</th>
+                                        <th>الجهة / النقابة</th>
+                                        <th>الولاية</th>
+                                        <th>المستخدم المسؤول</th>
+                                        <th>الحالة</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>تحديث كشف الحساب البنكي</td>
+                                        <td>نقابة الأطباء القومية</td>
+                                        <td>الخرطوم (الرئيسي)</td>
+                                        <td>سوبر أدمن</td>
+                                        <td><span class="badge success">تم الاعتماد</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>إدخال استمارات العضوية الجديدة</td>
+                                        <td>اتحاد أصحاب العمل - قطاع النقل</td>
+                                        <td>ولاية كسلا</td>
+                                        <td>مسؤول ولاية كسلا</td>
+                                        <td><span class="badge success">مكتمل</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>أرشفة تلقائية لبلوغ سن المعاش</b></td>
+                                        <td>نقابة المعلمين</td>
+                                        <td>ولاية الجزيرة</td>
+                                        <td>محرك النظام الذكي</td>
+                                        <td><span class="badge danger">تم التشطير والأرشفة</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>تعديل سجل الأصول الثابتة</td>
+                                        <td>نقابة المهندسين القومية</td>
+                                        <td>ولاية البحر الأحمر</td>
+                                        <td>مسؤول بورتسودان</td>
+                                        <td><span class="badge warning">قيد المراجعة</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3><i class="fa-solid fa-chart-bar"></i>نسب توزيع تنظيمات الولايات</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div style="padding: 10px; background-color: var(--primary-light); border-radius: 6px; margin-bottom: 12px; font-size: 12.5px;">
+                                <strong>ولاية الخرطوم الاتحادية:</strong> 45% من النقابات والأصول.
+                            </div>
+                            <div style="padding: 10px; background-color: #fef5ec; border-radius: 6px; margin-bottom: 12px; font-size: 12.5px;">
+                                <strong>ولاية كسلا:</strong> تشمل اتحاد أصحاب العمل وهيئات فرعية نشطة.
+                            </div>
+                            <div style="padding: 10px; background-color: #e8f8f0; border-radius: 6px; font-size: 12.5px;">
+                                <strong>بقية الولايات الـ 16:</strong> ربط كامل وعزل تام للملفات (RBAC) لضمان السرية والحماية من التداخل الإداري.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: UNIONS VIEW -->
+            <section id="unions" class="app-section">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><i class="fa-solid fa-users-gear"></i>إدارة النقابات القومية العامة الـ 15</h3>
+                        <button class="btn-submit" style="padding: 6px 12px; font-size: 12px;"><i class="fa-solid fa-plus"></i>إضافة نقابة قومية جديدة</button>
+                    </div>
+                    <div class="panel-body">
+                        <p style="font-size: 13.5px; color: var(--secondary-color); margin-bottom: 20px;">يتم استدعاء أسماء وبيانات هذه النقابات ديناميكياً داخل قوائم منسدلة (Dropdown Lists) في شاشات تسجيل الأعضاء والولايات لضمان توحيد البيانات المركزية.</p>
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>اسم النقابة القومية</th>
+                                    <th>كشف العضوية</th>
+                                    <th>الحسابات البنكية</th>
+                                    <th>سجل الأصول العقارية والمالية</th>
+                                    <th>النماذج والاستمارات الإلكترونية</th>
+                                    <th>التحكم</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>نقابة المعلمين</strong></td>
+                                    <td><span class="badge primary">3,420 عضو</span></td>
+                                    <td><span class="badge success">معتمد - بنك الخرطوم</span></td>
+                                    <td>مباني رئاسة + 14 عقار ولائي</td>
+                                    <td>12 استمارة رقمية للخدمات</td>
+                                    <td>
+                                        <button class="btn-action view" title="عرض السجلات"><i class="fa-solid fa-eye"></i></button>
+                                        <button class="btn-action edit" title="تعديل"><i class="fa-solid fa-pen"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>نقابة الأطباء</strong></td>
+                                    <td><span class="badge primary">1,910 عضو</span></td>
+                                    <td><span class="badge success">معتمد - بنك أم درمان الوطني</span></td>
+                                    <td>معدات، عيادات فرعية، أصول ثابتة</td>
+                                    <td>8 نماذج إلكترونية وموافقة</td>
+                                    <td>
+                                        <button class="btn-action view"><i class="fa-solid fa-eye"></i></button>
+                                        <button class="btn-action edit"><i class="fa-solid fa-pen"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>نقابة المهندسين</strong></td>
+                                    <td><span class="badge primary">2,150 عضو</span></td>
+                                    <td><span class="badge warning">تحديث معلق</span></td>
+                                    <td>مقر دار المهندس + مركبات وآليات</td>
+                                    <td>6 استمارات اعتماد مهني</td>
+                                    <td>
+                                        <button class="btn-action view"><i class="fa-solid fa-eye"></i></button>
+                                        <button class="btn-action edit"><i class="fa-solid fa-pen"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: EMPLOYERS VIEW -->
+            <section id="employers" class="app-section">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><i class="fa-solid fa-briefcase"></i>اتحاد عام أصحاب العمل بالسودان</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div style="background-color: var(--primary-light); padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 13.5px; border-right: 4px solid var(--primary-color);">
+                            يتكون الاتحاد هيكلياً من <strong>5 قطاعات رئيسية تقريباً</strong>، ويندرج تحت كل قطاع ما بين <strong>5 إلى 7 نقابات قومية فرعية</strong>، وجميعها تدعم عمليات الإضافة والتعديل والحذف وتخضع لنفس تفاصيل العضوية، الأصول، والحسابات البنكية.
+                        </div>
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>القطاع الرئيسي بالاتحاد</th>
+                                    <th>عدد النقابات القومية التابعة</th>
+                                    <th>إجمالي العضوية المسجلة</th>
+                                    <th>حالة الحساب البنكي الموحد</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>القطاع التجاري</b></td>
+                                    <td>6 نقابات (المصدرين، الموردين، الغرف التجارية...)</td>
+                                    <td>1,450 شركة ومؤسسة</td>
+                                    <td><span class="badge success">نشط ومعتمد</span></td>
+                                    <td><button class="btn-submit" style="padding:4px 8px; font-size:11px;">عرض تفاصيل القطاع</button></td>
+                                </tr>
+                                <tr>
+                                    <td><b>القطاع الصناعي</b></td>
+                                    <td>5 نقابات (الصناعات الغذائية، التحويلية، البلاستيك...)</td>
+                                    <td>890 مصنع مسجل</td>
+                                    <td><span class="badge success">نشط ومعتمد</span></td>
+                                    <td><button class="btn-submit" style="padding:4px 8px; font-size:11px;">عرض تفاصيل القطاع</button></td>
+                                </tr>
+                                <tr>
+                                    <td><b>قطاع النقل</b></td>
+                                    <td>7 نقابات قومية (الشاحنات، اللواري، غرف النقل السريع...)</td>
+                                    <td>2,100 مالك ومشغل</td>
+                                    <td><span class="badge warning">مراجعة معلقة</span></td>
+                                    <td><button class="btn-submit" style="padding:4px 8px; font-size:11px;">عرض تفاصيل القطاع</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: PROFESSIONAL UNIONS VIEW -->
+            <section id="professional" class="app-section">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><i class="fa-solid fa-graduation-cap"></i>الاتحادات المهنية بالسودان</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div style="background-color: #fef9e7; color: #7d6608; padding: 15px; border-radius: 8px; margin-bottom: 25px; font-size: 13.5px; border-right: 4px solid var(--warning-color);">
+                            <i class="fa-solid fa-circle-info"></i> <strong>ملاحظة تحليلية للنظام:</strong> هذا القسم يحتوي على الاتحادات المهنية المتعددة، وكل اتحاد قومي يضم اتحادات ولائية فرعية. سيتم لاحقاً تحديد النماذج الورقية والعمليات الإجرائية المتقدمة والتقارير المحددة لها لإدماجها برمجياً.
+                        </div>
+                        <div style="border: 1px dashed var(--secondary-color); padding: 30px; text-align: center; border-radius: 8px; color: var(--secondary-color);">
+                            <i class="fa-solid fa-gears" style="font-size: 40px; margin-bottom: 15px; color: var(--primary-color);"></i>
+                            <h4>شاشة التخصيص والمراجعة قيد التحليل المتقدم</h4>
+                            <p style="font-size: 12px; margin-top: 5px;">الهياكل والروابط جاهزة لاستقبال المعطيات فور اعتمادها من مكتب المسجل العام.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: STATE MANAGEMENT VIEW -->
+            <section id="states" class="app-section">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><i class="fa-solid fa-map-location-dot"></i>منظومة عزل وإدارة الولايات (18 ولاية بالسودان)</h3>
+                        <button class="btn-submit" style="padding: 6px 12px; font-size: 12px;"><i class="fa-solid fa-folder-plus"></i>إضافة ولاية جديدة للنظام</button>
+                    </div>
+                    <div class="panel-body">
+                        <div style="margin-bottom: 20px; font-size: 13px; color: var(--text-dark);">
+                            يضمن النظام لجميع الولايات (مثل <b>ولاية كسلا</b>) جدار أمان معزول بالكامل؛ بحيث لا يمكن لمستخدم ولاية كسلا أو غيرها الاطلاع أو تعديل أي بيانات تخص ولاية أخرى على الإطلاق، بينما يملك السوبر أدمن الصلاحية الشاملة للمراقبة والربط.
+                        </div>
+                        
+                        <h4 style="font-size: 14px; margin-bottom: 12px; color: var(--primary-color); font-weight: 700; border-right: 3px solid var(--accent-color); padding-right: 8px;">نموذج هيكلية الإدارة المحلية: فرع ولاية كسلا</h4>
+                        <table class="custom-table" style="margin-bottom: 30px;">
+                            <thead>
+                                <tr>
+                                    <th>المستوى التنظيمي بكسلا</th>
+                                    <th>العناصر والوحدات المندرجة</th>
+                                    <th>عدد الأعضاء المسجلين</th>
+                                    <th>مستوى الصلاحية الممنوحة لمستخدم الولاية</th>
+                                    <th>مزامنة البيانات الاتحادية</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>1. اتحاد أصحاب العمل بالولاية</b></td>
+                                    <td>غرفة التجارة المحلية بكسلا + قطاع الزراعة والإنتاج</td>
+                                    <td>420 منشأة ومزارع</td>
+                                    <td>إدخال وتحديث ورفع التقارير والوثائق فقط</td>
+                                    <td><span class="badge success"><i class="fa-solid fa-cloud-arrow-up"></i> متزامن لحظياً</span></td>
+                                </tr>
+                                <tr>
+                                    <td><b>2. الهيئات النقابية بالولاية</b></td>
+                                    <td>الهيئات الرئيسية + الهيئات الفرعية بالمحليات</td>
+                                    <td>1,200 عضو محلي</td>
+                                    <td>إدخال وتحديث ورفع التقارير والوثائق فقط</td>
+                                    <td><span class="badge success"><i class="fa-solid fa-cloud-arrow-up"></i> متزامن لحظياً</span></td>
+                                </tr>
+                                <tr>
+                                    <td><b>3. الوحدات النقابية بكسلا</b></td>
+                                    <td>وحدات فرعية منبثقة من الهيئات المحلية التخصصية</td>
+                                    <td>18 وحدة نقابية بالمحليات</td>
+                                    <td>إدخال وتحديث ورفع التقارير والوثائق فقط</td>
+                                    <td><span class="badge success"><i class="fa-solid fa-cloud-arrow-up"></i> متزامن لحظياً</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 6: PENSIONS & AUTOMATED ARCHIVING MODULE -->
+            <section id="pensions" class="app-section">
+                <div class="panel">
+                    <div class="panel-header" style="background-color: #fef5ec; border-bottom-color: var(--accent-color);">
+                        <h3 style="color: #d35400;"><i class="fa-solid fa-user-clock"></i>نظام إدارة المعاشات المطور والأرشفة التلقائية الذكية</h3>
+                        <span class="badge danger">آلية التشطير النشطة</span>
+                    </div>
+                    <div class="panel-body">
+                        <div style="background-color: #fdf2e9; border-right: 4px solid var(--accent-color); padding: 15px; border-radius: 8px; margin-bottom: 25px; font-size: 13.5px;">
+                            <strong>آلية عمل النظام الذكي:</strong> تم برمجة النظام لمراقبة تاريخ ميلاد وتواريخ تعيين أعضاء وموظفي النقابات والتنظيمات بشكل مؤتمت. عند بلوغ الموظف أو العضو <b>السن القانونية للمعاش</b>، يقوم النظام برمجياً <b>بشطر وعزل بياناته تلقائياً</b>؛ حيث يتم نقله وتحويل حالته مباشرة إلى "ملف مؤرشف - معاشيين" لمنع تداخل كشوف العاملين النشطين مع صيانة كامل أرشيفه الإداري والمالي التاريخي.
+                        </div>
+
+                        <h4 style="font-size: 14px; margin-bottom: 12px; color: var(--primary-color);">سجل الموظفين والأعضاء المحالين للمعاش تلقائياً هذا الشهر</h4>
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>الرقم النقابي الموحد</th>
+                                    <th>اسم الموظف / العضو المتقاعد</th>
+                                    <th>النقابة أو التنظيم الأصلي</th>
+                                    <th>الولاية</th>
+                                    <th>تاريخ بلوغ المعاش والإجراء</th>
+                                    <th>حالة ملف الأرشفة الرقمية</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>SU-10492</td>
+                                    <td>عبد المنعم جلال الدين محمد</td>
+                                    <td>نقابة المعلمين القومية</td>
+                                    <td>ولاية الخرطوم</td>
+                                    <td>20 مايو 2026 (تلقائي)</td>
+                                    <td><span class="badge danger">مشطور ومؤرشف بأمان</span></td>
+                                </tr>
+                                <tr>
+                                    <td>SU-11204</td>
+                                    <td>آمنة فضل الله الطاهر</td>
+                                    <td>نقابة الأطباء - الهيئة الفرعية</td>
+                                    <td>ولاية كسلا</td>
+                                    <td>18 مايو 2026 (تلقائي)</td>
+                                    <td><span class="badge danger">مشطور ومؤرشف بأمان</span></td>
+                                </tr>
+                                <tr>
+                                    <td>SU-09841</td>
+                                    <td>عثمان ميرغني صالح البشير</td>
+                                    <td>اتحاد أصحاب العمل - النقل</td>
+                                    <td>ولاية الجزيرة</td>
+                                    <td>05 مايو 2026 (تلقائي)</td>
+                                    <td><span class="badge danger">مشطور ومؤرشف بأمان</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 7: INTERNAL & VIDEO COMMUNICATIONS MODULE -->
+            <section id="communications" class="app-section">
+                <div class="dashboard-grid">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3><i class="fa-solid fa-message"></i>المحادثات النصية والرسائل الفورية والإدارية بين الولايات</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="chat-container">
+                                <div class="chat-messages">
+                                    <div class="chat-bubble received">
+                                        <strong>مسؤول ولاية كسلا:</strong> السلام عليكم سعادة المسجل العام. تم رفع استمارات كشوف الأصول وسجل الحساب البنكي المحدث الخاص باتحاد أصحاب العمل بكسلا عبر النظام لمراجعتكم.
+                                    </div>
+                                    <div class="chat-bubble sent">
+                                        <strong>السوبر أدمن (المكتب الاتحادي):</strong> وعليكم السلام ورحمة الله وبركاته. أهلاً بك يا فندم، تم استقبال الإشعارات والملفات بنجاح، وجاري التحقق المالي منها لاعتمادها رسمياً الآن.
+                                    </div>
+                                    <div class="chat-bubble received">
+                                        <strong>مسؤول ولاية بورتسودان:</strong> تم تفعيل نظام المعاشات التلقائي اليوم وشطر ملفات الموظفين المتقاعدين بنجاح دون أي تدخل يدوي، الملفات مؤرشفة وجاهزة للاطلاع.
+                                    </div>
+                                </div>
+                                <div class="chat-input-area">
+                                    <input type="text" class="form-control" placeholder="اكتب رسالتك الإدارية الفورية هنا...">
+                                    <button class="btn-submit"><i class="fa-solid fa-paper-plane"></i>إرسال</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3><i class="fa-solid fa-video"></i>نظام الغرف المرئية والفيديو شات الداخلي</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="call-wrapper">
+                                <div style="font-size: 13px; margin-bottom: 10px; color: #cbd5e1;">بوابة الربط والتكامل المباشر المتوافقة مع:</div>
+                                <span class="badge primary" style="background-color:#2980b9; color:white; padding: 5px 12px; margin-left: 5px;"><i class="fa-solid fa-video"></i> Zoom Integration</span>
+                                <span class="badge success" style="background-color:#27ae60; color:white; padding: 5px 12px;"><i class="fa-solid fa-circle-dot"></i> Google Meet API</span>
+                                
+                                <div class="video-grid">
+                                    <div class="video-box" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200'); background-size: cover;">
+                                        <span>المكتب الاتحادي الرئيسي (أنت)</span>
+                                    </div>
+                                    <div class="video-box" style="background-color: #34495e;">
+                                        <i class="fa-solid fa-user-slash" style="font-size: 30px; color: #bdc3c7;"></i>
+                                        <span>مكتب ولاية كسلا الفرعي</span>
+                                    </div>
+                                </div>
+
+                                <div class="call-controls">
+                                    <button class="btn-call mute"><i class="fa-solid fa-microphone"></i></button>
+                                    <button class="btn-call video-toggle"><i class="fa-solid fa-video"></i></button>
+                                    <button class="btn-call hangup" onclick="alert('تم إنهاء المكالمة المرئية الإدارية بأمان.')"><i class="fa-solid fa-phone-slash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 8: UNION INTERNAL ADMINISTRATIVE OFFICE -->
+            <section id="office" class="app-section">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><i class="fa-solid fa-folder-tree"></i>النظام الإداري الداخلي للمكتب الاتحادي العاصمي</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p style="font-size: 13.5px; color: var(--secondary-color); margin-bottom: 20px;">شاشة معالجة المعاملات والمكاتبات الصادرة والواردة، تنظيم الاجتماعات، شؤون موظفي مسجل عام تنظيمات العمل الداخليين، ومراقبة الحضور والانصراف والأرشفة التاريخية الرقمية الشاملة.</p>
+                        
+                        <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr;">
+                            <div style="border: 1px solid #edf2f7; padding: 15px; border-radius: 8px;">
+                                <h5 style="font-weight: 700; color: var(--primary-color); margin-bottom: 10px;"><i class="fa-solid fa-file-signature"></i> تسجيل خطاب صادر / وارد رسمي</h5>
+                                <div class="form-group">
+                                    <label>عنوان الخطاب / المعاملة</label>
+                                    <input type="text" class="form-control" placeholder="مثال: اعتماد الحساب البنكي لنقابة الأطباء">
+                                </div>
+                                <div class="form-group">
+                                    <label>الجهة الموجه إليها الخطاب</label>
+                                    <select class="form-control">
+                                        <option>وزارة العدل</option>
+                                        <option>بنك السودان المركزي</option>
+                                        <option>مكتب والي ولاية كسلا</option>
+                                    </select>
+                                </div>
+                                <button class="btn-submit"><i class="fa-solid fa-floppy-disk"></i> حفظ وأرشفة الخطاب وتوليد الباركود</button>
+                            </div>
+
+                            <div style="border: 1px solid #edf2f7; padding: 15px; border-radius: 8px;">
+                                <h5 style="font-weight: 700; color: var(--primary-color); margin-bottom: 10px;"><i class="fa-solid fa-users-viewfinder"></i> مراقبة الشؤون الداخلية والأفراد</h5>
+                                <ul style="list-style: none; font-size: 13px; line-height: 2;">
+                                    <li><i class="fa-solid fa-check-double" style="color: var(--success-color);"></i> إجمالي موظفي الرئاسة الاتحادية: 42 موظفاً إدارياً وتقنياً.</li>
+                                    <li><i class="fa-solid fa-check-double" style="color: var(--success-color);"></i> حالة نظام الحضور الذكي: مفعل ومربوط بالخادم المركزي للوزارة.</li>
+                                    <li><i class="fa-solid fa-check-double" style="color: var(--success-color);"></i> الخطابات الإدارية المنجزة هذا الأسبوع: 114 خطاباً رسمياً مؤرشفاً.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 9: TECHNICAL ARCHITECTURE & CYBERSECURITY SPECIFICATIONS -->
+            <section id="tech-specs" class="app-section">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><i class="fa-solid fa-shield-halved"></i>الهندسة البرمجية المقترحة وبنية الحماية السبرانية للمشروع</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="custom-table" style="margin-bottom: 25px;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%;">الطبقة البرمجية الهندسية</th>
+                                    <th style="width: 30%;">التقنيات المقترحة المعتمدة</th>
+                                    <th>مزايا وهدف الاستخدام في تطبيق مسجل تنظيمات العمل</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>الواجهة الأمامية (Frontend)</b></td>
+                                    <td><span class="badge primary">React.js / Next.js</span></td>
+                                    <td>بناء واجهات تفاعلية بالغة السرعة ومتوافقة كلياً مع الهواتف الذكية والشاشات المختلفة لدعم كافة مدخلي البيانات بالمكاتب الفرعية.</td>
+                                </tr>
+                                <tr>
+                                    <td><b>الواجهة الخلفية (Backend)</b></td>
+                                    <td><span class="badge primary">NestJS / Node.js</span></td>
+                                    <td>إنشاء معمارية برمجية متطورة للغاية قادرة على معالجة آلاف الطلبات المتزامنة والاتصالات اللحظية بين الولايات بدون توقف.</td>
+                                </tr>
+                                <tr>
+                                    <td><b>قاعدة البيانات المركزية</b></td>
+                                    <td><span class="badge primary">PostgreSQL</span></td>
+                                    <td>قاعدة بيانات علائقية جبارة تضمن حماية متقدمة لسلامة الترابط وجداول البيانات الحساسة وعزلها التام بين الولايات والقطاعات.</td>
+                                </tr>
+                                <tr>
+                                    <td><b>نظام التحكم بالصلاحيات والأمان</b></td>
+                                    <td><span class="badge success">Role Based Access Control (RBAC)</span></td>
+                                    <td>توزيع مصفوفة الأدوار بدقة متناهية؛ لضمان خصوصية كل ولاية، وتحجيم القيود، وضمان الصلاحية المطلقة الحصرية للسوبر أدمن الاتحادي.</td>
+                                </tr>
+                                <tr>
+                                    <td><b>بروتوكولات الأمان والحماية</b></td>
+                                    <td><span class="badge danger">JWT / HTTPS / تشفير البيانات</span></td>
+                                    <td>تأمين نقل البيانات عبر خوارزميات التشفير المعقدة، والتحقق الآمن من الهوية الرقمية لمنع أي اختراق أو تسريب للملفات النقابية.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- System Professional Sticky Footer Component -->
+        <footer>
+            جميع الحقوق محفوظة © مسجل عام تنظيمات العمل بجمهورية السودان - نظام الأتمتة وحوسبة الأعمال المتكامل 2026
+        </footer>
+    </main>
+
+    <!-- Unified Interactive Web Script Application JavaScript Logic -->
+    <script>
+        // Tab switching controller mechanism
+        function switchTab(event, sectionId) {
+            if(event) {
+                event.preventDefault();
+                // Remove active class from all sidebar elements
+                const menuItems = document.querySelectorAll('.sidebar-menu li');
+                menuItems.forEach(item => item.classList.remove('active'));
+                
+                // Add active class to clicked item parent element
+                event.currentTarget.parentElement.classList.add('active');
+            }
+
+            // Hide all application sections
+            const sections = document.querySelectorAll('.app-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            // Show target section ID
+            const targetSection = document.getElementById(sectionId);
+            if(targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Update main top page title heading based on selected area
+            const titleMap = {
+                'dashboard': 'لوحة التحكم السوبر أدمن المركزية العامة',
+                'unions': 'منظومة إدارة النقابات القومية العامة الـ 15 ومستنداتها',
+                'employers': 'إدارة هيكلية قطاعات اتحاد عام أصحاب العمل بالسودان',
+                'professional': 'مراجعة وتطوير هيكلية الاتحادات المهنية وتفاصيلها القادمة',
+                'states': 'لوحة تحكم تنظيمات الولايات الـ 18 الموحدة (نموذج ولاية كسلا)',
+                'pensions': 'نظام إدارة المعاشات المطور والتشطير الآلي الرقمي التلقائي للأعضاء',
+                'communications': 'منصة الرسائل الفورية الداخلية وغرف مكالمات الفيديو شات المدمجة',
+                'office': 'النظام الإداري والعمليات الداخلية لجمهورية مسجل عام تنظيمات العمل',
+                'tech-specs': 'المواصفات التقنية البرمجية وهندسة الحماية والحصانة السيبرانية للنظام'
+            };
+            
+            document.getElementById('page-main-title').innerText = titleMap[sectionId] || 'لوحة التحكم المركزية';
+        }
+
+        // Action function trigger inside notification alert component to jump straight to retirement archive tab
+        function goToPensionsTab() {
+            // Find sidebar element link for pensions and trigger it
+            const menuLinks = document.querySelectorAll('.sidebar-menu a');
+            let found = false;
+            menuLinks.forEach(link => {
+                if(link.getAttribute('onclick') && link.getAttribute('onclick').includes('pensions')) {
+                    link.click();
+                    found = true;
+                }
+            });
+            if(!found) {
+                switchTab(null, 'pensions');
+            }
+        }
+    </script>
+</body>
+</html>
